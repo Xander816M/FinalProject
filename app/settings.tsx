@@ -47,18 +47,17 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#d9d9d9",
+    backgroundColor: "white",
   },
 
   title: {
-    marginTop: 20,
+    marginTop: 40,
     marginLeft: 20,
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "600",
   },
 
   box: {
-    backgroundColor: "white",
     width: "85%",
     alignSelf: "center",
     marginTop: 20,
@@ -75,13 +74,14 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontWeight: "600",
-    fontSize: 16,
+    fontWeight: "bold",
+    fontSize: 20,
+
   },
 
   value: {
-    fontWeight: "700",
-    fontSize: 16,
+    fontWeight: "bold",
+    fontSize: 20,
   },
 
   textSizes: {
@@ -91,18 +91,18 @@ const styles = StyleSheet.create({
   },
 
   small: {
-    fontSize: 14,
-    fontWeight: "400",
+    fontSize: 15,
+    fontWeight: "bold",
   },
 
   medium: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 
   large: {
-    fontSize: 22,
-    fontWeight: "800",
+    fontSize: 25,
+    fontWeight: "bold",
   },
 
   navBar: {
