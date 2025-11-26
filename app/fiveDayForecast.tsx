@@ -19,15 +19,13 @@ const fiveDayForecast = () => {
                   color="black"
                 />
                 <View>
-                  <Text style={styles.lowOfText}>Low of</Text>
-                  <Text style={styles.lowOfText}>10 C</Text>
+                  <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
                 </View>
               </View>
               <Text style={styles.dayText}>Wednesday 26</Text>
             </View>
             <View>
-              <Text style={styles.highOfText}>High of</Text>
-              <Text style={styles.highOfText}>20 C</Text>
+              <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
             </View>
           </View>
         </View>
@@ -36,15 +34,13 @@ const fiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of</Text>
-                <Text style={styles.lowOfText}>10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
               </View>
             </View>
             <Text style={styles.dayText}>Thursday 27</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of</Text>
-            <Text style={styles.highOfText}>20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
           </View>
         </View>
         <View style={styles.oneDay}>
@@ -52,15 +48,13 @@ const fiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of</Text>
-                <Text style={styles.lowOfText}>10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
               </View>
             </View>
             <Text style={styles.dayText}>Friday 28</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of</Text>
-            <Text style={styles.highOfText}>20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
           </View>
         </View>
         <View style={styles.oneDay}>
@@ -68,15 +62,13 @@ const fiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of</Text>
-                <Text style={styles.lowOfText}>10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
               </View>
             </View>
             <Text style={styles.dayText}>Saturday 29</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of</Text>
-            <Text style={styles.highOfText}>20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
           </View>
         </View>
         <View style={styles.oneDay}>
@@ -84,15 +76,13 @@ const fiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of</Text>
-                <Text style={styles.lowOfText}>10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
               </View>
             </View>
             <Text style={styles.dayText}>Sunday 30</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of</Text>
-            <Text style={styles.highOfText}>20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
           </View>
         </View>
       </View>
@@ -116,7 +106,7 @@ export default fiveDayForecast;
 const styles = StyleSheet.create({
   navBar: {
     backgroundColor: "#D9D9D9",
-    height: "7%",
+    height: "8.5%",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -126,7 +116,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   fiveDayForecast: {
-    height: "93%",
+    height: "91.5%",
     justifyContent: "space-evenly",
     paddingTop: 40,
     paddingBottom: 50,
