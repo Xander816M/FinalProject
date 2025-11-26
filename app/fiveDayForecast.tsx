@@ -1,59 +1,157 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import {Octicons, MaterialIcons, Ionicons, Feather} from '@expo/vector-icons';
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React from "react";
+import { Octicons, MaterialIcons, Ionicons, Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const fiveDayForecast = () => {
   return (
     <View style={styles.contaner}>
       <View style={styles.fiveDayForecast}>
-        <Text style={styles.cityName}>Calgary</Text>
-        <View style={styles.oneDay}>
+        <View>
+          <Text style={styles.cityName}>Calgary</Text>
+          <View style={styles.oneDay}>
             <View>
-                <Feather name="sun" size={30} color="black" />
+              <View style={styles.iconWithLow}>
+                <Feather
+                  style={styles.icon}
+                  name="sun"
+                  size={40}
+                  color="black"
+                />
                 <View>
-                    <Text>Low of</Text>
-                    <Text>10 C</Text>
+                  <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
                 </View>
+              </View>
+              <Text style={styles.dayText}>Wednesday 26</Text>
             </View>
             <View>
-                <Text>High of</Text>
-                <Text>20 C</Text>
+              <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
             </View>
+          </View>
         </View>
-
+        <View style={styles.oneDay}>
+          <View>
+            <View style={styles.iconWithLow}>
+              <Feather style={styles.icon} name="sun" size={40} color="black" />
+              <View>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+              </View>
+            </View>
+            <Text style={styles.dayText}>Thursday 27</Text>
+          </View>
+          <View>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+          </View>
+        </View>
+        <View style={styles.oneDay}>
+          <View>
+            <View style={styles.iconWithLow}>
+              <Feather style={styles.icon} name="sun" size={40} color="black" />
+              <View>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+              </View>
+            </View>
+            <Text style={styles.dayText}>Friday 28</Text>
+          </View>
+          <View>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+          </View>
+        </View>
+        <View style={styles.oneDay}>
+          <View>
+            <View style={styles.iconWithLow}>
+              <Feather style={styles.icon} name="sun" size={40} color="black" />
+              <View>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+              </View>
+            </View>
+            <Text style={styles.dayText}>Saturday 29</Text>
+          </View>
+          <View>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+          </View>
+        </View>
+        <View style={styles.oneDay}>
+          <View>
+            <View style={styles.iconWithLow}>
+              <Feather style={styles.icon} name="sun" size={40} color="black" />
+              <View>
+                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+              </View>
+            </View>
+            <Text style={styles.dayText}>Sunday 30</Text>
+          </View>
+          <View>
+            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+          </View>
+        </View>
       </View>
       <View style={styles.navBar}>
-        <Octicons name="home-fill" size={35} color="white" />
-        <MaterialIcons name="sunny" size={35} color="white" />
-        <Ionicons name="settings-sharp" size={35} color="white" />
+        <TouchableOpacity onPress={() => router.push('/')}>
+            <Octicons name="home-fill" size={35} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <MaterialIcons name="sunny" size={35} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/settings')}>
+            <Ionicons name="settings-sharp" size={35} color="white" />
+        </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default fiveDayForecast
+export default fiveDayForecast;
 
 const styles = StyleSheet.create({
-    navBar:{
-        backgroundColor: "#D9D9D9",
-        height: '7%',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center'
-    },
-    contaner:{
-        backgroundColor: "#7DCDFF",
-        flexGrow: 1
-    },
-    fiveDayForecast:{
-        height: '93%',
-        // alignItems: 'center',
-    },
-    cityName:{
-        fontWeight: 'bold',
-    },
-    oneDay:{
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-    }
-})
+  navBar: {
+    backgroundColor: "#D9D9D9",
+    height: "8.5%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  contaner: {
+    backgroundColor: "#7DCDFF",
+    flexGrow: 1,
+  },
+  fiveDayForecast: {
+    height: "91.5%",
+    justifyContent: "space-evenly",
+    paddingTop: 40,
+    paddingBottom: 50,
+  },
+  cityName: {
+    fontWeight: "bold",
+    fontSize: 25,
+    alignSelf: 'center',
+    paddingBottom: 15
+  },
+  oneDay: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  iconWithLow: {
+    flexDirection: "row",
+  },
+  dayText: {
+    fontWeight: "bold",
+    fontSize: 20,
+    fontStyle: "italic",
+  },
+  lowOfText: {
+    fontWeight: "bold",
+    paddingLeft: 15,
+    fontSize: 20,
+    fontStyle: "italic",
+  },
+  icon: {
+    paddingTop: 5,
+  },
+  highOfText: {
+    fontWeight: "bold",
+    paddingRight: 15,
+    fontSize: 20,
+    fontStyle: "italic",
+  },
+});
