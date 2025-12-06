@@ -1,14 +1,37 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState }  from "react";
 import { Octicons, MaterialIcons, Ionicons, Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
+import {fetchForecast} from "@/api/getWeather"
+import { WeatherAPIForcast } from "@/types";
 
-const fiveDayForecast = () => {
+
+
+const FiveDayForecast = () => {
+  const [forecastAllDays, setForecastAllDays] = useState<WeatherAPIForcast[]>([])
+  const [locationName, setLocationName] = useState("")
+
+  const loadDate = async () => {
+    try {
+      const forecastData = await fetchForecast();
+      console.log("fetched", forecastData)
+      console.log("fetched .forecast", forecastData?.forecast)
+      setForecastAllDays(forecastData?.forecast);
+      setLocationName(forecastData.location.name)
+      console.log("forecast all days", forecastAllDays);
+    } catch (error) {
+      console.error("Error loading data on to forecast page", error)
+    }
+  }
+  
+  useEffect(() => {
+    loadDate()
+  }, [])
   return (
     <View style={styles.contaner}>
       <View style={styles.fiveDayForecast}>
         <View>
-          <Text style={styles.cityName}>Calgary</Text>
+          <Text style={styles.cityName}>{locationName}</Text>
           <View style={styles.oneDay}>
             <View>
               <View style={styles.iconWithLow}>
@@ -19,7 +42,7 @@ const fiveDayForecast = () => {
                   color="black"
                 />
                 <View>
-                  <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+                  <Text style={styles.lowOfText}>Low of {"\n"}{/*forecastAllDays?.forecastday[1]?.day?.mintemp_c*/}</Text>
                 </View>
               </View>
               <Text style={styles.dayText}>Wednesday 26</Text>
@@ -87,21 +110,21 @@ const fiveDayForecast = () => {
         </View>
       </View>
       <View style={styles.navBar}>
-        <TouchableOpacity onPress={() => router.push('/')}>
-            <Octicons name="home-fill" size={35} color="white" />
+        <TouchableOpacity onPress={() => router.push("/")}>
+          <Octicons name="home-fill" size={35} color="white" />
         </TouchableOpacity>
         <TouchableOpacity>
-            <MaterialIcons name="sunny" size={35} color="white" />
+          <MaterialIcons name="sunny" size={35} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push('/settings')}>
-            <Ionicons name="settings-sharp" size={35} color="white" />
+        <TouchableOpacity onPress={() => router.push("/settings")}>
+          <Ionicons name="settings-sharp" size={35} color="white" />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default fiveDayForecast;
+export default FiveDayForecast;
 
 const styles = StyleSheet.create({
   navBar: {
@@ -124,8 +147,8 @@ const styles = StyleSheet.create({
   cityName: {
     fontWeight: "bold",
     fontSize: 25,
-    alignSelf: 'center',
-    paddingBottom: 15
+    alignSelf: "center",
+    paddingBottom: 15,
   },
   oneDay: {
     flexDirection: "row",
