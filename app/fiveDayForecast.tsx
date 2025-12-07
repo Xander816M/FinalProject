@@ -6,23 +6,27 @@ import {fetchForecast} from "@/api/getWeather"
 import { WeatherAPIForcast } from "@/types";
 
 
+function getForecastDay(forecastAllDays: WeatherAPIForcast, forecastIndex : number) : any {
+  return forecastAllDays?.forecastday?.[forecastIndex];
+}
 
 const FiveDayForecast = () => {
-  const [forecastAllDays, setForecastAllDays] = useState<WeatherAPIForcast[]>([])
+  const [forecastAllDays, setForecastAllDays] = useState<WeatherAPIForcast>({})
   const [locationName, setLocationName] = useState("")
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  
 
   const loadDate = async () => {
     try {
       const forecastData = await fetchForecast();
-      console.log("fetched", forecastData)
-      console.log("fetched .forecast", forecastData?.forecast)
-      setForecastAllDays(forecastData?.forecast);
-      setLocationName(forecastData.location.name)
-      console.log("forecast all days", forecastAllDays);
+      const forecasts = forecastData.forecast as WeatherAPIForcast;
+      setForecastAllDays(forecasts);
+      setLocationName(forecastData.location.name);
     } catch (error) {
-      console.error("Error loading data on to forecast page", error)
+      console.error("Error loading data on to forecast page", error);
     }
   }
+  console.log("forecast", forecastAllDays);
   
   useEffect(() => {
     loadDate()
@@ -42,13 +46,13 @@ const FiveDayForecast = () => {
                   color="black"
                 />
                 <View>
-                  <Text style={styles.lowOfText}>Low of {"\n"}{/*forecastAllDays?.forecastday[1]?.day?.mintemp_c*/}</Text>
+                  <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 1))?.day.mintemp_c ?? "null"} C</Text>
                 </View>
               </View>
-              <Text style={styles.dayText}>Wednesday 26</Text>
+              <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 2))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 2))?.date))).getDate() ?? "null"}</Text>
             </View>
             <View>
-              <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+              <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 1))?.day.maxtemp_c ?? "null"} C</Text>
             </View>
           </View>
         </View>
@@ -57,13 +61,13 @@ const FiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 2))?.day.mintemp_c ?? "null"} C</Text>
               </View>
             </View>
-            <Text style={styles.dayText}>Thursday 27</Text>
+            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 3))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 3))?.date))).getDate() ?? "null"}</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 2))?.day.maxtemp_c ?? "null"} C</Text>
           </View>
         </View>
         <View style={styles.oneDay}>
@@ -71,13 +75,13 @@ const FiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 3))?.day.mintemp_c ?? "null"} C</Text>
               </View>
             </View>
-            <Text style={styles.dayText}>Friday 28</Text>
+            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 4))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 4))?.date))).getDate() ?? "null"}</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 3))?.day.maxtemp_c ?? "null"} C</Text>
           </View>
         </View>
         <View style={styles.oneDay}>
@@ -85,13 +89,13 @@ const FiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 4))?.day.mintemp_c ?? "null"} C</Text>
               </View>
             </View>
-            <Text style={styles.dayText}>Saturday 29</Text>
+            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 5))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 5))?.date))).getDate() ?? "null"}</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 4))?.day.maxtemp_c ?? "null"} C</Text>
           </View>
         </View>
         <View style={styles.oneDay}>
@@ -99,13 +103,13 @@ const FiveDayForecast = () => {
             <View style={styles.iconWithLow}>
               <Feather style={styles.icon} name="sun" size={40} color="black" />
               <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}10 C</Text>
+                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 5))?.day.mintemp_c ?? "null"} C</Text>
               </View>
             </View>
-            <Text style={styles.dayText}>Sunday 30</Text>
+            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 6))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 6))?.date))).getDate() ?? "null"}</Text>
           </View>
           <View>
-            <Text style={styles.highOfText}>High of {"\n"}20 C</Text>
+            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 5))?.day.maxtemp_c ?? "null"} C</Text>
           </View>
         </View>
       </View>
@@ -178,3 +182,4 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
 });
+
