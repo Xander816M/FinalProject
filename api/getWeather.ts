@@ -1,6 +1,3 @@
-import { WeatherAPIForcast } from "@/types";
-
-
 export const fetchForecast = async () => {
   try {
     const response = await fetch("http://api.weatherapi.com/v1/forecast.json?key=cbd03f903c5949e993505852250612&q=Calgary&days=7");
@@ -11,3 +8,14 @@ export const fetchForecast = async () => {
     return [];
   }
 };
+
+export const fetchCurrentWeather = async () => {
+  try {
+    const response = await fetch("https://api.weatherapi.com/v1/current.json?key=cbd03f903c5949e993505852250612&q=London");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+}
