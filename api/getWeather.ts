@@ -1,9 +1,12 @@
 import { WeatherAPIForcast } from "@/types";
 
+const BASE_URL = 
+  process.env.WEATHER_API_URL || "http://api.weatherapi.com/v1/forecast.json?key=cbd03f903c5949e993505852250612&q=";
+
 
 export const fetchForecast = async () => {
   try {
-    const response = await fetch("http://api.weatherapi.com/v1/forecast.json?key=cbd03f903c5949e993505852250612&q=Calgary&days=7");
+    const response = await fetch(`${BASE_URL}Calgary&days=7`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -14,7 +17,7 @@ export const fetchForecast = async () => {
 
 export const fetchCurrent = async (): Promise<WeatherAPIForcast | null> => {
   try {
-    const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=cbd03f903c5949e993505852250612&q=Calgary`);
+    const response = await fetch(`${BASE_URL}Calgary`);
     const data = await response.json();
     return data as WeatherAPIForcast;
   } catch (error) {

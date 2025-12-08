@@ -1,19 +1,14 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import React, { useEffect, useState }  from "react";
-import { Octicons, MaterialIcons, Ionicons, Feather } from "@expo/vector-icons";
+import { Octicons, MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import {fetchForecast} from "@/api/getWeather"
+import {fetchForecast} from "@/api/getWeather";
 import { WeatherAPIForcast } from "@/types";
-
-
-function getForecastDay(forecastAllDays: WeatherAPIForcast, forecastIndex : number) : any {
-  return forecastAllDays?.forecastday?.[forecastIndex];
-}
+import ForecastDay  from "@/components/forecastDay";
 
 const FiveDayForecast = () => {
   const [forecastAllDays, setForecastAllDays] = useState<WeatherAPIForcast>({})
   const [locationName, setLocationName] = useState("")
-  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   
 
   const loadDate = async () => {
@@ -31,86 +26,17 @@ const FiveDayForecast = () => {
   useEffect(() => {
     loadDate()
   }, [])
+
   return (
     <View style={styles.contaner}>
       <View style={styles.fiveDayForecast}>
         <View>
           <Text style={styles.cityName}>{locationName}</Text>
-          <View style={styles.oneDay}>
-            <View>
-              <View style={styles.iconWithLow}>
-                <Feather
-                  style={styles.icon}
-                  name="sun"
-                  size={40}
-                  color="black"
-                />
-                <View>
-                  <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 1))?.day.mintemp_c ?? "null"} C</Text>
-                </View>
-              </View>
-              <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 2))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 2))?.date))).getDate() ?? "null"}</Text>
-            </View>
-            <View>
-              <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 1))?.day.maxtemp_c ?? "null"} C</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.oneDay}>
-          <View>
-            <View style={styles.iconWithLow}>
-              <Feather style={styles.icon} name="sun" size={40} color="black" />
-              <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 2))?.day.mintemp_c ?? "null"} C</Text>
-              </View>
-            </View>
-            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 3))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 3))?.date))).getDate() ?? "null"}</Text>
-          </View>
-          <View>
-            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 2))?.day.maxtemp_c ?? "null"} C</Text>
-          </View>
-        </View>
-        <View style={styles.oneDay}>
-          <View>
-            <View style={styles.iconWithLow}>
-              <Feather style={styles.icon} name="sun" size={40} color="black" />
-              <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 3))?.day.mintemp_c ?? "null"} C</Text>
-              </View>
-            </View>
-            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 4))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 4))?.date))).getDate() ?? "null"}</Text>
-          </View>
-          <View>
-            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 3))?.day.maxtemp_c ?? "null"} C</Text>
-          </View>
-        </View>
-        <View style={styles.oneDay}>
-          <View>
-            <View style={styles.iconWithLow}>
-              <Feather style={styles.icon} name="sun" size={40} color="black" />
-              <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 4))?.day.mintemp_c ?? "null"} C</Text>
-              </View>
-            </View>
-            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 5))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 5))?.date))).getDate() ?? "null"}</Text>
-          </View>
-          <View>
-            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 4))?.day.maxtemp_c ?? "null"} C</Text>
-          </View>
-        </View>
-        <View style={styles.oneDay}>
-          <View>
-            <View style={styles.iconWithLow}>
-              <Feather style={styles.icon} name="sun" size={40} color="black" />
-              <View>
-                <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, 5))?.day.mintemp_c ?? "null"} C</Text>
-              </View>
-            </View>
-            <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, 6))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, 6))?.date))).getDate() ?? "null"}</Text>
-          </View>
-          <View>
-            <Text style={styles.highOfText}>High of {"\n"}{(getForecastDay(forecastAllDays, 5))?.day.maxtemp_c ?? "null"} C</Text>
-          </View>
+          <ForecastDay tempNum={1} dateNum={2} forecastAllDays={forecastAllDays}/>
+          <ForecastDay tempNum={2} dateNum={3} forecastAllDays={forecastAllDays}/>
+          <ForecastDay tempNum={3} dateNum={4} forecastAllDays={forecastAllDays}/>
+          <ForecastDay tempNum={4} dateNum={5} forecastAllDays={forecastAllDays}/>
+          <ForecastDay tempNum={5} dateNum={6} forecastAllDays={forecastAllDays}/>
         </View>
       </View>
       <View style={styles.navBar}>
