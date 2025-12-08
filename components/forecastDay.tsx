@@ -7,7 +7,7 @@ function getForecastDay(forecastAllDays: WeatherAPIForcast, forecastIndex : numb
   return forecastAllDays?.forecastday?.[forecastIndex];
 }
 
-const ForecastDay = ({tempNum, dateNum, forecastAllDays }) => {
+const ForecastDay = ({tempNum, dateNum, forecastAllDays  }) => {
     const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     
   return (
@@ -21,7 +21,7 @@ const ForecastDay = ({tempNum, dateNum, forecastAllDays }) => {
                   color="black"
                 />
                 <View>
-                  <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, tempNum))?.day.mintemp_c ?? "null"} C</Text>
+                  <Text style={styles.lowOfText}>Low of {"\n"}{(getForecastDay(forecastAllDays, tempNum))?.day.mintemp_ ?? "null"} C</Text>
                 </View>
               </View>
               <Text style={styles.dayText}>{weekday[(new Date(Date.parse((getForecastDay(forecastAllDays, dateNum))?.date))).getDay()] ?? "null"} {(new Date(Date.parse((getForecastDay(forecastAllDays, dateNum))?.date))).getDate() ?? "null"}</Text>

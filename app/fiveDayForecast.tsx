@@ -21,7 +21,6 @@ const FiveDayForecast = () => {
       console.error("Error loading data on to forecast page", error);
     }
   }
-  console.log("forecast", forecastAllDays);
   
   useEffect(() => {
     loadDate()

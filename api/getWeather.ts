@@ -1,5 +1,6 @@
 import { WeatherAPIForcast } from "@/types";
 
+
 const BASE_URL = 
   process.env.WEATHER_API_URL || "http://api.weatherapi.com/v1/forecast.json?key=cbd03f903c5949e993505852250612&q=";
 
