@@ -1,4 +1,4 @@
-import { WeatherAPIForcast } from "@/types";
+import { WeatherAPICurrent } from "@/types";
 
 
 const BASE_URL = 
@@ -16,11 +16,11 @@ export const fetchForecast = async () => {
   }
 };
 
-export const fetchCurrent = async (): Promise<WeatherAPIForcast | null> => {
+export const fetchCurrent = async (): Promise<WeatherAPICurrent | null> => {
   try {
     const response = await fetch(`${BASE_URL}Calgary`);
     const data = await response.json();
-    return data as WeatherAPIForcast;
+    return data as WeatherAPICurrent;
   } catch (error) {
     console.error("Error fetching current weather data:", error);
     return null;

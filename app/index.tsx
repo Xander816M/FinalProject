@@ -2,7 +2,7 @@ import { Ionicons, MaterialIcons, Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Text, TouchableOpacity, View, StyleSheet, Image } from "react-native";
 import { fetchCurrent } from "@/api/getWeather";
-import { WeatherAPIForcast } from "@/types";
+import { WeatherAPICurrent } from "@/types";
 import { useEffect, useState } from "react";
 
 // Format helper
@@ -23,7 +23,7 @@ function formatDateInfo(dateString?: string) {
 }
 
 export default function Index() {
-  const [currentWeather, setCurrentWeather] = useState<WeatherAPIForcast | null>(null);
+  const [currentWeather, setCurrentWeather] = useState<WeatherAPICurrent | null>(null);
 
   const loadData = async () => {
     try {
