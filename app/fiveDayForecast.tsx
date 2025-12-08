@@ -1,20 +1,14 @@
 import { StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import React, { useEffect, useState }  from "react";
-import { Octicons, MaterialIcons, Ionicons, Feather } from "@expo/vector-icons";
+import { Octicons, MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {fetchForecast} from "@/api/getWeather";
 import { WeatherAPIForcast } from "@/types";
 import ForecastDay  from "@/components/forecastDay";
 
-
-function getForecastDay(forecastAllDays: WeatherAPIForcast, forecastIndex : number) : any {
-  return forecastAllDays?.forecastday?.[forecastIndex];
-}
-
 const FiveDayForecast = () => {
   const [forecastAllDays, setForecastAllDays] = useState<WeatherAPIForcast>({})
   const [locationName, setLocationName] = useState("")
-  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   
 
   const loadDate = async () => {
