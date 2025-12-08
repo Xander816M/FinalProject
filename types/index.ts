@@ -10,8 +10,10 @@ export interface WeatherAPIForcast {
       };
     }
   ];
+}
 
-  current: {
+export interface WeatherAPICurrent {
+    current: {
     last_updated?: string;
     temp_c: number;
     temp_f: number;
