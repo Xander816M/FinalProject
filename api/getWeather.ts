@@ -1,28 +1,39 @@
-import { WeatherAPICurrent } from "@/types";
+// api/getWeather.ts
 
+const API_KEY = "cbd03f903c5949e993505852250612";
 
-const BASE_URL = 
-  process.env.WEATHER_API_URL || "http://api.weatherapi.com/v1/forecast.json?key=cbd03f903c5949e993505852250612&q=";
+//CLEAN city
+function sanitizeCity(city: string): string {
+  const trimmed = city?.trim();
+  return trimmed && trimmed.length > 0 ? trimmed : "Calgary";
+}
 
+// Fetch 7-dayS
+export const fetchForecast = async (city: string) => {
+  const safeCity = encodeURIComponent(sanitizeCity(city));
 
-export const fetchForecast = async () => {
   try {
-    const response = await fetch(`${BASE_URL}Calgary&days=7`);
-    const data = await response.json();
-    return data;
+    const response = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${safeCity}&days=7`
+    );
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching forecast data:", error);
-    return [];
+    console.error("Error fetching forecast:", error);
+    return null;
   }
 };
 
-export const fetchCurrent = async (): Promise<WeatherAPICurrent | null> => {
+// Fetch todays
+export const fetchCurrent = async (city: string) => {
+  const safeCity = encodeURIComponent(sanitizeCity(city));
+
   try {
-    const response = await fetch(`${BASE_URL}Calgary`);
-    const data = await response.json();
-    return data as WeatherAPICurrent;
+    const response = await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${safeCity}`
+    );
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching current weather data:", error);
+    console.error("Error fetching current weather:", error);
     return null;
   }
 };

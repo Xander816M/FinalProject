@@ -1,44 +1,59 @@
-import { StyleSheet, Text, View, TouchableOpacity} from "react-native";
-import React, { useEffect, useState }  from "react";
-import { Octicons, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { fetchForecast } from "@/api/getWeather";
+import ForecastDay from "@/components/forecastDay";
+import { useSettings } from "@/hooks/useSettings";
+import { Ionicons, MaterialIcons, Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import {fetchForecast} from "@/api/getWeather";
-import { WeatherAPIForcast } from "@/types";
-import ForecastDay  from "@/components/forecastDay";
+import { useEffect, useState, } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const FiveDayForecast = () => {
-  const [forecastAllDays, setForecastAllDays] = useState<WeatherAPIForcast>({})
-  const [locationName, setLocationName] = useState("")
-  
+export default function FiveDayForecast() {
+  const [forecastDays, setForecastDays] = useState<any[]>([]);
+  const [locationName, setLocationName] = useState("");
 
-  const loadDate = async () => {
+  const { city, unit, theme, fontSize } = useSettings();
+
+  const loadData = async () => {
     try {
-      const forecastData = await fetchForecast();
-      const forecasts = forecastData.forecast as WeatherAPIForcast;
-      setForecastAllDays(forecasts);
-      setLocationName(forecastData.location.name);
+      const data = await fetchForecast(city);
+
+      if (data?.forecast?.forecastday) {
+        setForecastDays(data.forecast.forecastday);
+        setLocationName(data.location.name);
+      }
     } catch (error) {
-      console.error("Error loading data on to forecast page", error);
+      console.error("Error loading forecast:", error);
     }
-  }
-  
+  };
+
   useEffect(() => {
-    loadDate()
-  }, [])
+    loadData();
+  }, [city]);
 
   return (
-    <View style={styles.contaner}>
-      <View style={styles.fiveDayForecast}>
-        <View>
-          <Text style={styles.cityName}>{locationName}</Text>
-          <ForecastDay tempNum={1} dateNum={2} forecastAllDays={forecastAllDays}/>
-          <ForecastDay tempNum={2} dateNum={3} forecastAllDays={forecastAllDays}/>
-          <ForecastDay tempNum={3} dateNum={4} forecastAllDays={forecastAllDays}/>
-          <ForecastDay tempNum={4} dateNum={5} forecastAllDays={forecastAllDays}/>
-          <ForecastDay tempNum={5} dateNum={6} forecastAllDays={forecastAllDays}/>
-        </View>
+    <View style={[styles.container, theme === "dark" && { backgroundColor: "#000" }]}>
+      <View style={styles.forecastWrapper}>
+        <Text
+          style={[
+            styles.cityName,
+            theme === "dark" && { color: "white" },
+            { fontSize: fontSize === "large" ? 32 : fontSize === "small" ? 18 : 26 },
+          ]}
+        >
+          {locationName}
+        </Text>
+
+        {forecastDays.length > 0 && (
+          <>
+            <ForecastDay tempNum={0} dateNum={0} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={1} dateNum={1} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={2} dateNum={2} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={3} dateNum={3} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={4} dateNum={4} forecastAllDays={forecastDays} />
+          </>
+        )}
       </View>
-      <View style={styles.navBar}>
+
+      <View style={[styles.navBar, theme === "dark" && { backgroundColor: "#333" }]}>
         <TouchableOpacity onPress={() => router.push("/")}>
           <Octicons name="home-fill" size={35} color="white" />
         </TouchableOpacity>
@@ -51,60 +66,17 @@ const FiveDayForecast = () => {
       </View>
     </View>
   );
-};
-
-export default FiveDayForecast;
+}
 
 const styles = StyleSheet.create({
+  container: { backgroundColor: "#7DCDFF", flex: 1 },
+  forecastWrapper: { flex: 1, paddingTop: 40, paddingBottom: 20 },
+  cityName: { fontWeight: "bold", alignSelf: "center", marginBottom: 20 },
   navBar: {
     backgroundColor: "#D9D9D9",
-    height: "8.5%",
+    height: 70,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
   },
-  contaner: {
-    backgroundColor: "#7DCDFF",
-    flexGrow: 1,
-  },
-  fiveDayForecast: {
-    height: "91.5%",
-    justifyContent: "space-evenly",
-    paddingTop: 40,
-    paddingBottom: 50,
-  },
-  cityName: {
-    fontWeight: "bold",
-    fontSize: 25,
-    alignSelf: "center",
-    paddingBottom: 15,
-  },
-  oneDay: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  iconWithLow: {
-    flexDirection: "row",
-  },
-  dayText: {
-    fontWeight: "bold",
-    fontSize: 20,
-    fontStyle: "italic",
-  },
-  lowOfText: {
-    fontWeight: "bold",
-    paddingLeft: 15,
-    fontSize: 20,
-    fontStyle: "italic",
-  },
-  icon: {
-    paddingTop: 5,
-  },
-  highOfText: {
-    fontWeight: "bold",
-    paddingRight: 15,
-    fontSize: 20,
-    fontStyle: "italic",
-  },
 });
-

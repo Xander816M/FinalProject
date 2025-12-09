@@ -1,80 +1,69 @@
+import { fetchCurrent } from "@/api/getWeather";
+import { useSettings } from "@/hooks/useSettings";
+import { WeatherAPICurrent } from "@/types";
 import { Ionicons, MaterialIcons, Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { Text, TouchableOpacity, View, StyleSheet, Image } from "react-native";
-import { fetchCurrent } from "@/api/getWeather";
-import { WeatherAPICurrent } from "@/types";
 import { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-// Format helper
 function formatDateInfo(dateString?: string) {
   if (!dateString) return { day: "-", time: "-" };
   const date = new Date(dateString.replace(" ", "T"));
-
-  const day = new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-  }).format(date);
-
-  const time = new Intl.DateTimeFormat("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
-
-  return { day, time };
+  return {
+    day: new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(date),
+    time: new Intl.DateTimeFormat("en-US", { hour: "2-digit", minute: "2-digit" }).format(date),
+  };
 }
 
 export default function Index() {
   const [currentWeather, setCurrentWeather] = useState<WeatherAPICurrent | null>(null);
 
-  const loadData = async () => {
-    try {
-      const data = await fetchCurrent();
-      if (data) {
-        setCurrentWeather(data);
-      }
-    } catch (error) {
-      console.error("Error loading data on to main page", error);
-    }
-  };
+  const { city, unit, theme, fontSize } = useSettings();
+
+  const bgColor = theme === "dark" ? "#111" : "#7DCDFF";
+  const textColor = theme === "dark" ? "white" : "black";
+  const dynamicFont = fontSize === "small" ? 18 : fontSize === "large" ? 32 : 24;
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const load = async () => {
+      const data = await fetchCurrent(city);
+      if (data) setCurrentWeather(data);
+    };
+    load();
+  }, [city, unit]);
 
-  const current = currentWeather?.current;
-  const displayTemp = current ? `${Math.round(current.temp_c)}°C` : "-";
-  const formatted = formatDateInfo(current?.last_updated);
+  const c = currentWeather?.current;
+  const formatted = formatDateInfo(c?.last_updated);
 
-  // Build icon URL safely
-  const iconUrl = current?.condition?.icon ? `https:${current.condition.icon}` : null;
+  const tempValue = c ? (unit === "C" ? c.temp_c : c.temp_f) : null;
+  const tempDisplay = tempValue !== null ? `${Math.round(tempValue)}°${unit}` : "-";
+
+  const iconUrl = c?.condition?.icon ? `https:${c.condition.icon}` : null;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
       <View style={styles.homeContainer}>
-        <Text style={styles.appName}>LightBox</Text>
+        <Text style={[styles.appName, { color: textColor }]}>LightBox</Text>
 
         <View style={styles.cityBox}>
-          <Text style={styles.cityName}>{currentWeather?.location?.name ?? "Calgary"}</Text>
+          <Text style={[styles.cityName, { color: textColor, fontSize: dynamicFont + 8 }]}>
+            {currentWeather?.location?.name ?? city}
+          </Text>
 
-          {iconUrl && (
-            <Image
-              style={styles.weatherIcon}
-              source={{ uri: iconUrl }}
-            />
-          )}
+          {iconUrl && <Image style={styles.weatherIcon} source={{ uri: iconUrl }} />}
         </View>
 
         <View style={styles.weatherInfo}>
-          <View>
-            <Text style={styles.dateText}>{formatted.day}</Text>
-            <Text style={styles.timeText}>{formatted.time}</Text>
-          </View>
+          <Text style={[styles.dateText, { color: textColor }]}>{formatted.day}</Text>
+          <Text style={[styles.timeText, { color: textColor }]}>{formatted.time}</Text>
 
-          <View>
-            <Text style={styles.tempText}>{displayTemp}</Text>
-          </View>
+          <Text style={[styles.tempText, { color: textColor, fontSize: dynamicFont + 12 }]}>
+            {tempDisplay}
+          </Text>
         </View>
       </View>
 
+      {/* NAVBAR */}
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => router.push("/")}>
           <Octicons name="home-fill" size={35} color="white" />
@@ -91,69 +80,22 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
+  container: { flexGrow: 1 },
   navBar: {
     backgroundColor: "#D9D9D9",
-    height: "8.5%",
+    height: 70,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     marginTop: 340,
   },
-  container: {
-    backgroundColor: "#7DCDFF",
-    flexGrow: 1,
-  },
-  appName: {
-    fontWeight: "bold",
-    fontSize: 40,
-    paddingBottom: 15,
-  },
-
-  cityName: {
-    marginTop: 40,
-    fontSize: 50,
-    fontWeight: "bold",
-  },
-
-  homeContainer: {
-    marginTop: 70,
-    width: "80%",
-    alignSelf: "center",
-  },
-
-  cityBox: {
-    alignItems: "center",
-  },
-
-  weatherIcon: {
-    height: 120,
-    width: 120,
-    marginTop: 16,
-  },
-
-  weatherInfo: {
-    justifyContent: "space-between",
-    width: "80%",
-    alignSelf: "center",
-    marginTop: 25,
-    alignItems:"center",
-    
-  },
-
-  timeText: {
-    paddingTop: 5,
-    fontWeight: "bold",
-    fontSize: 20,
-    textAlign:"center"
-  },
-
-  dateText: {
-    fontWeight: "bold",
-    fontSize: 50,
-  },
-
-  tempText: {
-    fontWeight: "bold",
-    fontSize: 50,
-  },
+  appName: { fontWeight: "bold", fontSize: 40 },
+  homeContainer: { marginTop: 70, width: "80%", alignSelf: "center" },
+  cityBox: { alignItems: "center" },
+  cityName: { marginTop: 40, fontWeight: "bold" },
+  weatherIcon: { height: 120, width: 120, marginTop: 16 },
+  weatherInfo: { alignItems: "center", marginTop: 25 },
+  dateText: { fontWeight: "bold", fontSize: 50 },
+  timeText: { fontWeight: "bold", fontSize: 22 },
+  tempText: { fontWeight: "bold" },
 });
