@@ -2,14 +2,12 @@ import { useSettings } from "@/hooks/useSettings";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 interface ForecastDayProps {
-  tempNum: number;           
-  dateNum: number;            
+  tempNum: number;                      
   forecastAllDays: any[];     
 }
 
 export default function ForecastDay({
   tempNum,
-  dateNum,
   forecastAllDays,
 }: ForecastDayProps) {
   const { unit, theme, fontSize } = useSettings(); // ← GLOBAL SETTINGS
@@ -19,7 +17,12 @@ export default function ForecastDay({
   if (!day) return null;
 
   const date = day.date;
-  const weekdayIndex = new Date(date).getDay();
+  let weekdayIndex = (new Date(date).getDay())+1;
+
+  if (weekdayIndex >6) {
+    weekdayIndex = weekdayIndex -7
+  }
+  
   const weekday = [
     "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
   ][weekdayIndex];
@@ -40,7 +43,7 @@ export default function ForecastDay({
     <View
       style={[
         styles.oneDay,
-        theme === "dark" && { backgroundColor: "#222" },
+        theme === "dark" && { backgroundColor: "#000" },
       ]}
     >
      
@@ -67,7 +70,7 @@ export default function ForecastDay({
             { fontSize: large ? 26 : small ? 18 : 22 },
           ]}
         >
-          {weekday} {new Date(date).getDate()}
+          {weekday} {(new Date(date).getDate())+1}
         </Text>
       </View>
 
@@ -115,5 +118,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontStyle: "italic",
     textAlign: "right",
+    paddingBottom: 34
   },
 });

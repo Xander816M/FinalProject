@@ -44,11 +44,11 @@ export default function FiveDayForecast() {
 
         {forecastDays.length > 0 && (
           <>
-            <ForecastDay tempNum={0} dateNum={0} forecastAllDays={forecastDays} />
-            <ForecastDay tempNum={1} dateNum={1} forecastAllDays={forecastDays} />
-            <ForecastDay tempNum={2} dateNum={2} forecastAllDays={forecastDays} />
-            <ForecastDay tempNum={3} dateNum={3} forecastAllDays={forecastDays} />
-            <ForecastDay tempNum={4} dateNum={4} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={1} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={2} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={3} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={4} forecastAllDays={forecastDays} />
+            <ForecastDay tempNum={5} forecastAllDays={forecastDays} />
           </>
         )}
       </View>
@@ -70,11 +70,11 @@ export default function FiveDayForecast() {
 
 const styles = StyleSheet.create({
   container: { backgroundColor: "#7DCDFF", flex: 1 },
-  forecastWrapper: { flex: 1, paddingTop: 40, paddingBottom: 20 },
-  cityName: { fontWeight: "bold", alignSelf: "center", marginBottom: 20 },
+  forecastWrapper: { flex: 1, paddingTop: 40, paddingBottom: 20, height: '91.3%' },
+  cityName: { fontWeight: "bold", alignSelf: "center", marginBottom: 20, marginTop: 8 },
   navBar: {
     backgroundColor: "#D9D9D9",
-    height: 70,
+    height: '8.7%',
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",

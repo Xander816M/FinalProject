@@ -41,11 +41,11 @@ export default function Settings() {
 
           <View style={{ flexDirection: "row", gap: 12 }}>
             <TouchableOpacity onPress={() => setUnit("C")}>
-              <Text style={[styles.value, unit === "C" && styles.selected]}>C°</Text>
+              <Text style={[styles.value, unit === "C" && styles.selected, theme === "dark" && unit !=="C" && { color: "white" }]}>C°</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setUnit("F")}>
-              <Text style={[styles.value, unit === "F" && styles.selected]}>F°</Text>
+              <Text style={[styles.value, unit === "F" && styles.selected, theme === "dark" && unit !=="F" && { color: "white" }]}>F°</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -58,13 +58,13 @@ export default function Settings() {
 
           <View style={{ flexDirection: "row", gap: 16 }}>
             <TouchableOpacity onPress={() => setTheme("light")}>
-              <Text style={[styles.value, theme === "light" && styles.selected]}>
+              <Text style={[styles.value, theme === "light" && styles.selected, theme === "dark" && theme !=="light" && { color: "white" }]}>
                 light
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setTheme("dark")}>
-              <Text style={[styles.value, theme === "dark" && styles.selected]}>
+              <Text style={[styles.value, theme === "dark" && styles.selected, theme === "dark" && theme !=="dark" && { color: "white" }]}>
                 dark
               </Text>
             </TouchableOpacity>
@@ -79,15 +79,15 @@ export default function Settings() {
 
           <View style={styles.textSizes}>
             <TouchableOpacity onPress={() => setFontSize("small")}>
-              <Text style={[styles.small, fontSize === "small" && styles.selected]}>Aa</Text>
+              <Text style={[styles.small, fontSize === "small" && styles.selected, theme === "dark" && fontSize !=="small" && { color: "white" }]}>Aa</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setFontSize("medium")}>
-              <Text style={[styles.medium, fontSize === "medium" && styles.selected]}>Aa</Text>
+              <Text style={[styles.medium, fontSize === "medium" && styles.selected, theme === "dark" && fontSize !=="medium" && { color: "white" }]}>Aa</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setFontSize("large")}>
-              <Text style={[styles.large, fontSize === "large" && styles.selected]}>Aa</Text>
+              <Text style={[styles.large, fontSize === "large" && styles.selected, theme === "dark" && fontSize !=="large" && { color: "white" }]}>Aa</Text>
             </TouchableOpacity>
           </View>
         </View>

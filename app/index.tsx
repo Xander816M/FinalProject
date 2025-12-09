@@ -54,8 +54,8 @@ export default function Index() {
         </View>
 
         <View style={styles.weatherInfo}>
-          <Text style={[styles.dateText, { color: textColor }]}>{formatted.day}</Text>
-          <Text style={[styles.timeText, { color: textColor }]}>{formatted.time}</Text>
+          <Text style={[styles.dateText, { color: textColor, fontSize: dynamicFont + 24 }]}>{formatted.day}</Text>
+          <Text style={[styles.timeText, { color: textColor, fontSize: dynamicFont + 14 }]}>{formatted.time}</Text>
 
           <Text style={[styles.tempText, { color: textColor, fontSize: dynamicFont + 12 }]}>
             {tempDisplay}
@@ -64,7 +64,7 @@ export default function Index() {
       </View>
 
       {/* NAVBAR */}
-      <View style={styles.navBar}>
+      <View style={[styles.navBar, theme === "dark" && { backgroundColor: "#333" }]}>
         <TouchableOpacity onPress={() => router.push("/")}>
           <Octicons name="home-fill" size={35} color="white" />
         </TouchableOpacity>
@@ -83,19 +83,18 @@ const styles = StyleSheet.create({
   container: { flexGrow: 1 },
   navBar: {
     backgroundColor: "#D9D9D9",
-    height: 70,
+    height: '9%',
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginTop: 340,
   },
   appName: { fontWeight: "bold", fontSize: 40 },
-  homeContainer: { marginTop: 70, width: "80%", alignSelf: "center" },
+  homeContainer: { marginTop: 70, width: "80%", alignSelf: "center", height: '84.18%'},
   cityBox: { alignItems: "center" },
   cityName: { marginTop: 40, fontWeight: "bold" },
   weatherIcon: { height: 120, width: 120, marginTop: 16 },
   weatherInfo: { alignItems: "center", marginTop: 25 },
-  dateText: { fontWeight: "bold", fontSize: 50 },
-  timeText: { fontWeight: "bold", fontSize: 22 },
+  dateText: { fontWeight: "bold"},
+  timeText: { fontWeight: "bold"  },
   tempText: { fontWeight: "bold" },
 });
